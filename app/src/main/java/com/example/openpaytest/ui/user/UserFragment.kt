@@ -10,6 +10,8 @@ import com.example.openpaytest.R
 import com.example.openpaytest.base.BaseFragment
 import com.example.openpaytest.databinding.FragmentUserBinding
 import com.example.openpaytest.extensions.loadImage
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -39,6 +41,16 @@ class UserFragment : BaseFragment() {
 
                 }
             }
+
+        }
+
+        lifecycleScope.launch {
+            viewModel.ratedMovies.collect{
+                binding.recyclerView.apply {
+                    adapter = MovieAdapter(it)
+                    layoutManager = FlexboxLayoutManager(requireContext(), FlexDirection.COLUMN)
+                }
+            }
         }
 
     }
@@ -46,8 +58,15 @@ class UserFragment : BaseFragment() {
     override fun startFragmentActions() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.getUser()
+                launch {
+                    viewModel.getUser()
+                }
+
+                launch {
+                    viewModel.getRatedMovies()
+                }
             }
+
         }
     }
 

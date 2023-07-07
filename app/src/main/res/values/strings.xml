@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">OpenpayTest</string>
-    <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="avatar_description">user avatar</string>
+    <string name="rated_movies">Rated Movies</string>
+    <string name="rate">Rate: %s</string>
+    <string name="title_profile">Profile</string>
+
 </resources>
