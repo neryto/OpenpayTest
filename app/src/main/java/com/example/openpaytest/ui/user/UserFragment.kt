@@ -10,6 +10,7 @@ import com.example.openpaytest.R
 import com.example.openpaytest.base.BaseFragment
 import com.example.openpaytest.databinding.FragmentUserBinding
 import com.example.openpaytest.extensions.loadImage
+import com.example.openpaytest.ui.movies.MovieAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint

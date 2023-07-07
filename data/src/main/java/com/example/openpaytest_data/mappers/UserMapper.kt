@@ -1,8 +1,9 @@
 package com.example.openpaytest_data.mappers
 
-import com.example.openpaytest_data.db.entities.RatedMovieEntity
+import com.example.openpaytest_data.db.entities.MovieEntity
 import com.example.openpaytest_data.db.entities.UserEntity
-import com.example.openpaytest_data.models.RatedMovie
+import com.example.openpaytest_data.models.Movie
+import com.example.openpaytest_data.models.MovieType
 import com.example.openpaytest_data.models.User
 import com.example.openpaytest_network.responses.RatedMoviesResponse
 import com.example.openpaytest_network.responses.UserResponse
@@ -36,41 +37,42 @@ constructor() {
         )
     }
 
-    fun toRatedMovie(ratedMoviesResponse: RatedMoviesResponse): List<RatedMovie> {
-       return ratedMoviesResponse.results.map { results ->
-            RatedMovie(
-                id = results.id,
-                originalTitle = results.originalTitle,
-                posterPath = results.posterPath,
-                releaseDate = results.releaseDate,
-                title = results.title,
-                voteAverage = results.voteAverage
+    fun toRatedMovie(ratedMoviesResponse: RatedMoviesResponse): List<Movie> {
+       return ratedMoviesResponse.results.map { result ->
+            Movie(
+                id = result.id.toString(),
+                originalTitle = result.originalTitle,
+                posterPath = result.posterPath,
+                releaseDate = result.releaseDate,
+                title = result.title,
+                voteAverage = result.voteAverage
             )
         }
     }
 
-    fun toRatedMovie(ratedMovies: List<RatedMovieEntity>): List<RatedMovie> {
-        return ratedMovies.map { results ->
-            RatedMovie(
-                id = results.id,
-                originalTitle = results.originalTitle,
-                posterPath = results.posterPath,
-                releaseDate = results.releaseDate,
-                title = results.title,
-                voteAverage = results.voteAverage
+    fun toRatedMovie(ratedMovies: List<MovieEntity>): List<Movie> {
+        return ratedMovies.map { result ->
+            Movie(
+                id = result.id,
+                originalTitle = result.originalTitle,
+                posterPath = result.posterPath,
+                releaseDate = result.releaseDate,
+                title = result.title,
+                voteAverage = result.voteAverage
             )
         }
     }
 
-    fun toRatedMoviesEntity(ratedMoviesResponse: RatedMoviesResponse): List<RatedMovieEntity> {
-       return ratedMoviesResponse.results.map {results ->
-            RatedMovieEntity(
-                id = results.id,
-                originalTitle = results.originalTitle,
-                posterPath = results.posterPath,
-                releaseDate = results.releaseDate,
-                title = results.title,
-                voteAverage = results.voteAverage
+    fun toRatedMoviesEntity(ratedMoviesResponse: RatedMoviesResponse): List<MovieEntity> {
+       return ratedMoviesResponse.results.map {result ->
+            MovieEntity(
+                id = "${result.id}_${MovieType.ratedType}",
+                originalTitle = result.originalTitle,
+                posterPath = result.posterPath,
+                releaseDate = result.releaseDate,
+                title = result.title,
+                voteAverage = result.voteAverage,
+                type = MovieType.ratedType
             )
         }
     }

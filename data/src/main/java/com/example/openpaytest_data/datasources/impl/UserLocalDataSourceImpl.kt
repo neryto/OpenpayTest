@@ -2,9 +2,9 @@ package com.example.openpaytest_data.datasources.impl
 
 import com.example.openpaytest_data.datasources.UserLocalDataSource
 import com.example.openpaytest_data.db.AppDatabase
-import com.example.openpaytest_data.db.entities.RatedMovieEntity
+import com.example.openpaytest_data.db.entities.MovieEntity
 import com.example.openpaytest_data.db.entities.UserEntity
-import com.example.openpaytest_data.models.RatedMovie
+import com.example.openpaytest_data.models.MovieType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -23,14 +23,14 @@ class UserLocalDataSourceImpl
         }
     }
 
-    override suspend fun getRatedMovies(): List<RatedMovieEntity>?
+    override suspend fun getRatedMovies(): List<MovieEntity>?
     = withContext(Dispatchers.IO){
-        database.moviesDao().getRatedMoviesDao()
+        database.moviesDao().getRatedMoviesDao(MovieType.ratedType)
     }
 
 
 
-    override suspend fun insertAllRatedMovies(ratedMovies: List<RatedMovieEntity>) {
+    override suspend fun insertAllRatedMovies(ratedMovies: List<MovieEntity>) {
         withContext(Dispatchers.IO){
             database.moviesDao().insertAllRatedMovies(ratedMovies)
         }

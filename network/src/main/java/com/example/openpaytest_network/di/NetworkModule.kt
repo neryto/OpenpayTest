@@ -3,6 +3,7 @@ package com.example.openpaytest_network.di
 import com.example.openpaytest_network.BuildConfig
 import com.example.openpaytest_network.NetworkBuilder
 import com.example.openpaytest_network.interactors.NetworkInteractor
+import com.example.openpaytest_network.services.MoviesApiServices
 import com.example.openpaytest_network.services.UserApiServices
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun userApiProvider(retrofit: Retrofit) = retrofit.create(UserApiServices::class.java)
+    fun userApiProvider(retrofit: Retrofit)
+    : UserApiServices = retrofit.create(UserApiServices::class.java)
+
+    @Provides
+    @Singleton
+    fun moviesApiProvider(retrofit: Retrofit)
+    : MoviesApiServices = retrofit.create(MoviesApiServices::class.java)
 
 }

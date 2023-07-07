@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class RatedMovieEntity(
+data class MovieEntity(
     @ColumnInfo(name = "rated_movie_id") @PrimaryKey
-    val id: Int,
+    val id: String,
     @ColumnInfo(name = "rated_movie_original_title")
     val originalTitle: String,
     @ColumnInfo(name = "rated_movie_poster_path")
@@ -17,5 +17,7 @@ data class RatedMovieEntity(
     @ColumnInfo(name = "rated_movie_title")
     val title: String,
     @ColumnInfo(name = "rated_vote_average")
-    val voteAverage: Double
-)
+    val voteAverage: Double,
+    val type:String,
+    val overview: String = "",
+    )

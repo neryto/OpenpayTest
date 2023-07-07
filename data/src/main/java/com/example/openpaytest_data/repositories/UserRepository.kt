@@ -4,11 +4,10 @@ import com.example.openpaytest_data.DataResult
 import com.example.openpaytest_data.datasources.impl.UserLocalDataSourceImpl
 import com.example.openpaytest_data.datasources.impl.UserRemoteDataSourceImpl
 import com.example.openpaytest_data.mappers.UserMapper
-import com.example.openpaytest_data.models.RatedMovie
+import com.example.openpaytest_data.models.Movie
 import com.example.openpaytest_data.models.User
 import com.example.openpaytest_network.responses.NetworkResult
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -49,7 +48,7 @@ constructor(
         }
     }
 
-   suspend fun getRatedMovies() : Flow<DataResult<List<RatedMovie>>> = flow{
+   suspend fun getRatedMovies() : Flow<DataResult<List<Movie>>> = flow{
         userRemoteDataSource.getRatedMovies().collect{
             when(it){
                 is NetworkResult.Error -> {
