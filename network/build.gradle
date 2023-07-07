@@ -1,26 +1,23 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
-
 }
 
 android {
-    namespace 'com.example.openpaytest'
+    namespace 'com.example.openpaytest_network'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.openpaytest"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField "String", "IMAGE_URL", "\"https://image.tmdb.org/t/p/w500//\""
-
+        consumerProguardFiles "consumer-rules.pro"
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "ACCOUNT_ID", "\"20113111\""
+        buildConfigField "String", "AP1_K3Y", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZjQzZTM2NTdkMTcxNjQ2OGVmMmNhNjJhMDY0OTM0ZSIsInN1YiI6IjY0YTY1MzE1MmI1MzFkMDEwN2E4MDhmMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Y_eDyTytJL14qgnUsXZqFHltoD4M2JA8usf0Ry8QgN0\""
 
     }
 
@@ -38,37 +35,27 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding true
-    }
-
-
-    kapt {
-        correctErrorTypes = true
+        buildConfig true
     }
 }
 
 dependencies {
-
-    //data module
-    implementation project(':data')
 
     //hilt
     implementation 'com.google.dagger:hilt-android:2.46.1'
     annotationProcessor 'com.google.dagger:hilt-compiler:2.46.1'
     kapt 'com.google.dagger:hilt-compiler:2.46.1'
 
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    //retrofit
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
