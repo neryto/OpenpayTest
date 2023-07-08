@@ -1,14 +1,16 @@
-package com.example.openpaytest_data.firestore
+package com.example.openpaytest.firestore
 
 import android.location.Location
 import android.util.Log
+import com.example.openpaytest.common.NotificationHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 
 class FirestoreHandler @Inject constructor(
-    private val firebseFirestore: FirebaseFirestore
+    private val firebseFirestore: FirebaseFirestore,
+    private val notificationHandler: NotificationHandler
 ) {
 
 
@@ -24,7 +26,9 @@ class FirestoreHandler @Inject constructor(
         firebseFirestore.collection("location")
             .add(locationData)
             .addOnSuccessListener { documentReference ->
-                Log.e("MYLOCATION", "DocumentSnapshot added with ID: ${documentReference.id}")
+                notificationHandler.showNotification(
+                    "Location registered",
+                    "location successfully registered in Firestore ${location.latitude},${location.longitude}")
             }
             .addOnFailureListener { e ->
                 Log.w("MYLOCATION", "Error adding document", e)

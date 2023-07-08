@@ -1,7 +1,7 @@
 package com.example.openpaytest.ui.registerlocation
 
 import android.Manifest
-import android.util.Log
+import android.content.Intent
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.openpaytest.R
 import com.example.openpaytest.base.BaseFragment
 import com.example.openpaytest.common.LocationPermissionsHandlerViewModel
+import com.example.openpaytest.common.LocationService
 import com.example.openpaytest.databinding.FragmentRegisterLocationBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class RegisterLocationFragment : BaseFragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 locationPermissionsHandlerViewModel.permissionsGranted.collect{
-                    if (it) initLocationWorker()
+                    if (it) initLocationService()
 
                 }
             }
@@ -45,10 +46,10 @@ class RegisterLocationFragment : BaseFragment() {
 
     }
 
-    private fun initLocationWorker() {
-        Log.e("MYLOCATION", "initLocationWorker")
-
-
+    private fun initLocationService() {
+       Intent(requireContext(), LocationService::class.java).apply {
+           requireActivity().startService(this)
+        }
     }
 
     override fun startFragmentActions() {

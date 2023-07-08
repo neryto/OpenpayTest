@@ -27,14 +27,4 @@ class DataModule {
         "app_database"
     ).build()
 
-    @Provides
-    @Singleton
-    fun firestoreProvider(@ApplicationContext context: Context) : FirebaseFirestore{
-        FirebaseApp.initializeApp(context)
-        return Firebase.firestore
-    }
-
-
-
-
 }
