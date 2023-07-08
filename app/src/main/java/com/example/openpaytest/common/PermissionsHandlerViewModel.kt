@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class LocationPermissionsHandlerViewModel
+class PermissionsHandlerViewModel
     @Inject constructor()
     : BaseViewModel() {
 

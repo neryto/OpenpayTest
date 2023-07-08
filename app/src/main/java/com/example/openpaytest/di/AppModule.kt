@@ -36,9 +36,10 @@ class AppModule {
     @Singleton
     fun firestoreHandlerProvider(
         firestore: FirebaseFirestore,
-        notificationHandler: NotificationHandler
+        notificationHandler: NotificationHandler,
+        @ApplicationContext context: Context
     ) : FirestoreHandler{
-        return FirestoreHandler(firestore,notificationHandler)
+        return FirestoreHandler(firestore,notificationHandler,context)
     }
 
     @Provides

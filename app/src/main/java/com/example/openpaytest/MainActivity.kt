@@ -16,7 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.openpaytest.databinding.ActivityMainBinding
-import com.example.openpaytest.common.LocationPermissionsHandlerViewModel
+import com.example.openpaytest.common.PermissionsHandlerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: LocationPermissionsHandlerViewModel by viewModels()
+    private val viewModel: PermissionsHandlerViewModel by viewModels()
 
     private val requestPermissionLauncher =
         registerForActivityResult(

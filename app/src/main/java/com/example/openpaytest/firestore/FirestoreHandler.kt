@@ -1,7 +1,9 @@
 package com.example.openpaytest.firestore
 
+import android.content.Context
 import android.location.Location
 import android.util.Log
+import com.example.openpaytest.R
 import com.example.openpaytest.common.NotificationHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -10,12 +12,13 @@ import javax.inject.Inject
 
 class FirestoreHandler @Inject constructor(
     private val firebseFirestore: FirebaseFirestore,
-    private val notificationHandler: NotificationHandler
+    private val notificationHandler: NotificationHandler,
+    private val context: Context
 ) {
 
 
     fun saveLocation(location: Location) {
-        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val formatter = SimpleDateFormat(context.getString(R.string.date_format))
         val date = Date()
         val current = formatter.format(date)
         val locationData = hashMapOf(
@@ -23,15 +26,19 @@ class FirestoreHandler @Inject constructor(
             "longitude" to location.longitude,
             "date" to current
         )
-        firebseFirestore.collection("location")
+        firebseFirestore.collection(context.getString(R.string.collection_path_location_id))
             .add(locationData)
-            .addOnSuccessListener { documentReference ->
+            .addOnSuccessListener {
                 notificationHandler.showNotification(
-                    "Location registered",
-                    "location successfully registered in Firestore ${location.latitude},${location.longitude}")
+                    context.getString(R.string.notification_title),
+                    context.getString(
+                        R.string.notification_message,
+                        location.latitude.toString(),
+                        location.longitude.toString()
+                    ))
             }
             .addOnFailureListener { e ->
-                Log.w("MYLOCATION", "Error adding document", e)
+                e.printStackTrace()
             }
 
     }

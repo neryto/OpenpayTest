@@ -10,7 +10,9 @@ import javax.inject.Inject
 class NotificationHandler @Inject constructor(private val context: Context) {
 
      fun showNotification(title: String, message: String) {
-        val builder = NotificationCompat.Builder(context, "my_chanel_id")
+        val builder = NotificationCompat.Builder(
+            context,
+            context.getString(R.string.notification_chanel))
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(message)
