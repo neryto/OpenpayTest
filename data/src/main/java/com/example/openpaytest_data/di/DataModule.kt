@@ -3,6 +3,10 @@ package com.example.openpaytest_data.di
 import android.content.Context
 import androidx.room.Room
 import com.example.openpaytest_data.db.AppDatabase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +26,15 @@ class DataModule {
         AppDatabase::class.java,
         "app_database"
     ).build()
+
+    @Provides
+    @Singleton
+    fun firestoreProvider(@ApplicationContext context: Context) : FirebaseFirestore{
+        FirebaseApp.initializeApp(context)
+        return Firebase.firestore
+    }
+
+
+
+
 }

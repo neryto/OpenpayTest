@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "289179907660",
+    "project_id": "openpay-317dc",
+    "storage_bucket": "openpay-317dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289179907660:android:15ee4c6151bf57abf1a6e9",
+        "android_client_info": {
+          "package_name": "com.example.openpaytest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289179907660-jbea30stp7nhs2i7cpobsuom12dea4mv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKLCPsDw93uP7tLXuoOOZsnCk0YYLcPJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289179907660-jbea30stp7nhs2i7cpobsuom12dea4mv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

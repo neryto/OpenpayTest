@@ -6,6 +6,7 @@
     <string name="rated_movies">Rated Movies</string>
     <string name="rate">Rate: %s</string>
     <string name="title_profile">Profile</string>
-    <string name="title_register_location">Register location</string>
+    <string name="title_register_location">Add location</string>
+    <string name="required_permission">Required permission</string>
 
 </resources>
