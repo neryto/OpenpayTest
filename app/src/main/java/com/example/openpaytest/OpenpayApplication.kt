@@ -15,9 +15,9 @@ class OpenpayApplication : Application() {
 
     private fun createNotificationsChanel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "my_chanel_id"
-            val channelName = "Openpay"
-            val channelDescription = "Openpay notifications"
+            val channelId = getString(R.string.notification_chanel)
+            val channelName = getString(R.string.app_name)
+            val channelDescription = getString(R.string.notification_chanel_description)
             val importance = NotificationManager.IMPORTANCE_HIGH
 
             val channel = NotificationChannel(channelId, channelName, importance).apply {

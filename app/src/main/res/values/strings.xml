@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">OpenpayTest</string>
     <string name="title_movies">Movies</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_map">Map</string>
+
     <string name="avatar_description">user avatar</string>
     <string name="rated_movies">Rated Movies</string>
     <string name="rate">Rate: %s</string>
@@ -13,5 +14,6 @@
     <string name="notification_title">Location registered</string>
     <string name="notification_message">Location successfully registered in Firestore %s,%s</string>
     <string name="date_format">yyyy-MM-dd HH:mm</string>
+    <string name="notification_chanel_description">Openpay notifications</string>
 
 </resources>
