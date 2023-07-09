@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_register_location"
-        android:name="com.example.openpaytest.ui.registerlocation.RegisterLocationFragment"
+        android:name="com.example.openpaytest.ui.location.LocationFragment"
         android:label="@string/title_register_location"
         tools:layout="@layout/fragment_register_location"
         />

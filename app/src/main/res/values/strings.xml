@@ -10,10 +10,9 @@
     <string name="title_register_location">Add location</string>
     <string name="required_permission">Required permission</string>
     <string name="notification_chanel">my_chanel_id</string>
-    <string name="collection_path_location_id">location</string>
     <string name="notification_title">Location registered</string>
     <string name="notification_message">Location successfully registered in Firestore %s,%s</string>
-    <string name="date_format">yyyy-MM-dd HH:mm</string>
+
     <string name="notification_chanel_description">Openpay notifications</string>
 
 </resources>

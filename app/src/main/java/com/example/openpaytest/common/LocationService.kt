@@ -3,10 +3,9 @@ package com.example.openpaytest.common
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.example.openpaytest.firestore.FirestoreHandler
-import com.google.firebase.firestore.FirebaseFirestore
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.openpaytest_data.models.LocationItem
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -15,13 +14,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LocationService : Service() {
 
+    companion object{
+        const val ACTION_SEND_LOCATION = "ACTION_SEND_LOCATION"
+        const val LOCATION_DATA = "LOCATION_DATA"
+    }
+
     @Inject
     lateinit var locationHandler: LocationHandler
-
-    @Inject
-    lateinit var firestoreHandler: FirestoreHandler
-
-
 
     private lateinit var scheduledExecutor: ScheduledExecutorService
 
@@ -34,7 +33,17 @@ class LocationService : Service() {
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor()
         scheduledExecutor.scheduleAtFixedRate({
             locationHandler.getCurrentLocation {
-                firestoreHandler.saveLocation(it)
+                val data = LocationItem(
+                    latitude = it.latitude.toString(),
+                    longitude = it.longitude.toString()
+                )
+             Intent(ACTION_SEND_LOCATION).apply {
+                  putExtra(LOCATION_DATA, data)
+                  LocalBroadcastManager
+                      .getInstance(this@LocationService)
+                      .sendBroadcast(this)
+
+              }
             }
         }, 0, 5, TimeUnit.MINUTES)
         return START_STICKY
