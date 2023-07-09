@@ -6,6 +6,7 @@ import android.os.IBinder
 import com.example.openpaytest.firestore.FirestoreHandler
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -30,7 +31,6 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor()
         scheduledExecutor.scheduleAtFixedRate({
             locationHandler.getCurrentLocation {

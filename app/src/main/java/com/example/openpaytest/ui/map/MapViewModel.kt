@@ -1,13 +1,16 @@
 package com.example.openpaytest.ui.map
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import com.example.openpaytest.base.BaseViewModel
+import com.example.openpaytest_data.repositories.LocationRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MapViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
+@HiltViewModel
+class MapViewModel
+    @Inject constructor(private val locationRepository: LocationRepository)
+    : BaseViewModel() {
+       suspend fun getLocations(){
+            locationRepository.getLocations()
+        }
 }
