@@ -77,6 +77,17 @@ This project is a mobile application for Android devices that consumes a REST AP
    <img src="app/screenshots/gallery_1.png" alt="Gallery screen 2" width="300" height="700">
    <img src="app/screenshots/gallery_2.png" alt="Gallery screen 3" width="300" height="700">
 
+   
+5. Implement Firebase Cloud and storage:
+- Adds the device location to  Firebase (Cloud Firestore) every 5 minutes.
+- Allow staorage a user image from device gallery to Firebase Storage.
+
+    <img src="app/screenshots/firebase _cloud.png" alt="Firebase cloud" width="700" height="500">
+    <img src="app/screenshots/firebase_storage.png" alt="Firebase storage" width="700" height="500">
+
+
+
+
   ## Netx steeps
    - Implement unit test into viewmodels
    - Add doamin layer 
