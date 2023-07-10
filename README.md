@@ -39,6 +39,9 @@ This project is a mobile application for Android devices that consumes a REST AP
  - Screen 1: Profile Screen
    - Displays user information.
    - Allows viewing user rated movies.
+   - 
+  ![Profile screen](screenshots/user_profile.png)
+
 
  - Screen 2: Movie List
    - Loads a list of all movies.
