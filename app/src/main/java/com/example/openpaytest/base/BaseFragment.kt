@@ -25,12 +25,12 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun setLayout(): Int
     abstract fun setupView(view: View)
-    abstract fun initObservers()
+    abstract fun initCollectors()
     abstract fun startFragmentActions()
 
     override fun onStart() {
         super.onStart()
-        initObservers()
+        initCollectors()
     }
 
    open fun showError(message : String){

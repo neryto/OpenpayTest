@@ -39,52 +39,50 @@ class GalleryFragment : BaseFragment() {
                 val imageUri = result.data?.data
                 imageUri?.let { uri ->
                     lifecycleScope.launch {
-                        repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            viewModel.saveImage(uri)
-                        }
+                        viewModel.saveImage(uri)
                     }
                 }
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Error al seleccionar la imagen",
+                    R.string.error_pick_image_message,
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
 
 
-    override fun initObservers() {
+    override fun initCollectors() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.saveImageResult.collect {
-                        if (it) Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT)
+                        if (it) Toast.makeText(
+                            requireContext(),
+                            R.string.success_uploading_image,
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
-
                     }
                 }
 
                 launch {
-                    repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        viewModel.loading.collect {
+                    viewModel.loading.collect {
                         showProgress(it)
-                        }
                     }
                 }
-
             }
+
         }
-
-
     }
 
-    private fun showProgress(show : Boolean) {
-        with(binding.progressIndicator){
-            if (show){
+
+    private fun showProgress(show: Boolean) {
+        with(binding.progressIndicator) {
+            if (show) {
                 if (visibility == View.GONE) visibility = View.VISIBLE
 
-            }else{
+            } else {
                 if (visibility == View.VISIBLE) visibility = View.GONE
 
             }

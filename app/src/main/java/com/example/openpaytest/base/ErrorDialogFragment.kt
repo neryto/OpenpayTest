@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.example.openpaytest.R
 
 class ErrorDialogFragment : DialogFragment() {
 
@@ -25,9 +26,9 @@ class ErrorDialogFragment : DialogFragment() {
         val message = arguments?.getString(ARG_MESSAGE)
 
         return AlertDialog.Builder(requireContext())
-            .setTitle("Error")
+            .setTitle(R.string.error_dialog_title)
             .setMessage(message)
-            .setPositiveButton("Aceptar") { dialog, _ ->
+            .setPositiveButton(R.string.accept_label) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

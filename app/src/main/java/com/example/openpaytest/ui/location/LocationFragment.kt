@@ -45,7 +45,7 @@ class LocationFragment : BaseFragment(),
         binding = FragmentRegisterLocationBinding.bind(view)
     }
 
-    override fun initObservers() {
+    override fun initCollectors() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

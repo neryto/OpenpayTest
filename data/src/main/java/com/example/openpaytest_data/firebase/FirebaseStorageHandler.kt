@@ -14,7 +14,6 @@ class FirebaseStorageHandler @Inject constructor() {
     private val storageRef = FirebaseStorage.getInstance().reference
 
    suspend fun saveImage(uri: Uri) : Flow<DataResult<Boolean>> = flow{
-       Log.e("MYIMAGES","saveImage")
        emit(DataResult.Loading(true))
        val imageRef = storageRef.child("images/${UUID.randomUUID()}.jpg")
        try {

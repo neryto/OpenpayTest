@@ -30,52 +30,56 @@ class UserFragment : BaseFragment() {
 
     }
 
-    override fun initObservers() {
-        lifecycleScope.launch {
-            viewModel.user.collect{user->
-                user?.let { notNullUser->
-                    with(binding){
-                        usernameTextView.text = notNullUser.name
-                        imageViewAvatar
-                            .loadImage("${BuildConfig.IMAGE_URL}${notNullUser.avatarUrl}")
-                    }
+    override fun initCollectors() {
 
-                }
-            }
-
-        }
-
-        lifecycleScope.launch {
-            viewModel.ratedMovies.collect{
-                binding.recyclerView.apply {
-                    adapter = MovieAdapter(it)
-                    layoutManager = FlexboxLayoutManager(requireContext(), FlexDirection.COLUMN)
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.error.collect{
-                it?.let {notNullError->
-                    showError(notNullError)
-                }
-            }
-        }
-
-    }
-
-    override fun startFragmentActions() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
-                    viewModel.getUser()
+                    viewModel.user.collect{user->
+                        user?.let { notNullUser->
+                            with(binding){
+                                usernameTextView.text = notNullUser.name
+                                imageViewAvatar
+                                    .loadImage(
+                                        "${BuildConfig.IMAGE_URL}${notNullUser.avatarUrl}"
+                                    )
+                            }
+
+                        }
+                    }
                 }
 
                 launch {
-                    viewModel.getRatedMovies()
+                    viewModel.ratedMovies.collect{
+                        binding.recyclerView.apply {
+                            adapter = MovieAdapter(it)
+                            layoutManager = FlexboxLayoutManager(
+                                requireContext(),
+                                FlexDirection.COLUMN
+                            )
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.error.collect{
+                        it?.let {notNullError->
+                            showError(notNullError)
+                        }
+                    }
                 }
             }
+        }
+    }
 
+    override fun startFragmentActions() {
+        viewModel.resetFlowValues()
+        lifecycleScope.launch {
+            viewModel.getUser()
+        }
+
+        lifecycleScope.launch {
+            viewModel.getRatedMovies()
         }
     }
 

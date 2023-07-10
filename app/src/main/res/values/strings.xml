@@ -15,5 +15,9 @@
 
     <string name="notification_chanel_description">Openpay notifications</string>
     <string name="title_gallery">Gallery</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="accept_label">Aceptar</string>
+    <string name="error_pick_image_message">Error al seleccionar la imagen</string>
+    <string name="success_uploading_image">Imagen almacenada exitosamente</string>
 
 </resources>

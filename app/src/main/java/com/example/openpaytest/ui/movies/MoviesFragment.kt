@@ -34,8 +34,6 @@ class MoviesFragment : BaseFragment() {
 
     override fun setupView(view: View) {
         binding = FragmentMoviesBinding.bind(view).apply {
-
-
             with(spinnerMovies) {
                 adapter = ArrayAdapter(
                     requireContext(),
@@ -60,28 +58,34 @@ class MoviesFragment : BaseFragment() {
         }
     }
 
-    override fun initObservers() {
+    override fun initCollectors() {
         lifecycleScope.launch {
-            viewModel.movies.collect {
-                binding.recyclerView.apply {
-                    adapter = MovieAdapter(it) { movie ->
-                        showDetail(movie)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                launch {
+                    viewModel.movies.collect {
+                        binding.recyclerView.apply {
+                            adapter = MovieAdapter(it) { movie ->
+                                showDetail(movie)
+                            }
+                            layoutManager = FlexboxLayoutManager(
+                                requireContext(),
+                                FlexDirection.COLUMN, WRAP
+                            )
+                        }
                     }
-                    layoutManager = FlexboxLayoutManager(
-                        requireContext(),
-                        FlexDirection.COLUMN, WRAP
-                    )
                 }
-            }
-        }
 
-        lifecycleScope.launch {
-            viewModel.error.collect {
-                it?.let { notNullError ->
-                    showError(notNullError)
+                launch {
+                    viewModel.error.collect {
+                        it?.let { notNullError ->
+                            showError(notNullError)
+                        }
+
+                    }
                 }
 
             }
+
         }
     }
 
@@ -90,9 +94,7 @@ class MoviesFragment : BaseFragment() {
 
     private fun performGetMovies(type: String) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getMovies(type)
-            }
+            viewModel.getMovies(type)
         }
     }
 
