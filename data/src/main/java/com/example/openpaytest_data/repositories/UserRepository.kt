@@ -25,8 +25,10 @@ constructor(
                     //call local data source
                     userLocalDataSource.getUser()?.let { userEntity ->
                         emit(DataResult.Success(userMapper.toUserDomain(userEntity)))
+                    } ?: kotlin.run {
+                        emit(DataResult.Error(it.message))
                     }
-                    //TODO handle errors
+
 
                 }
 
@@ -34,11 +36,12 @@ constructor(
                     //Call local data source
                     userLocalDataSource.getUser()?.let { userEntity ->
                         emit(DataResult.Success(userMapper.toUserDomain(userEntity)))
+                    } ?: kotlin.run {
+                        emit(DataResult.Error(it.e.localizedMessage))
                     }
-                    //TODO handle errors
                 }
 
-                NetworkResult.Loading -> emit(DataResult.Loading)
+                is NetworkResult.Loading -> emit(DataResult.Loading(it.show))
                 is NetworkResult.Success -> {
                     emit(DataResult.Success(userMapper.toUserDomain(it.data)))
                     //save user into local db
@@ -48,22 +51,25 @@ constructor(
         }
     }
 
-   suspend fun getRatedMovies() : Flow<DataResult<List<Movie>>> = flow{
-        userRemoteDataSource.getRatedMovies().collect{
-            when(it){
+    suspend fun getRatedMovies(): Flow<DataResult<List<Movie>>> = flow {
+        userRemoteDataSource.getRatedMovies().collect {
+            when (it) {
                 is NetworkResult.Error -> {
-                    userLocalDataSource.getRatedMovies()?.let {ratedMovies->
+                    userLocalDataSource.getRatedMovies()?.let { ratedMovies ->
                         emit(DataResult.Success(userMapper.toRatedMovie(ratedMovies)))
                     }
                 }
+
                 is NetworkResult.Exception -> {
-                    userLocalDataSource.getRatedMovies()?.let {ratedMovies->
+                    userLocalDataSource.getRatedMovies()?.let { ratedMovies ->
                         emit(DataResult.Success(userMapper.toRatedMovie(ratedMovies)))
                     }
                 }
-                NetworkResult.Loading -> {
-                    emit(DataResult.Loading)
+
+                is NetworkResult.Loading -> {
+                    emit(DataResult.Loading(it.show))
                 }
+
                 is NetworkResult.Success -> {
                     emit(DataResult.Success(userMapper.toRatedMovie(it.data)))
                     userLocalDataSource.insertAllRatedMovies(userMapper.toRatedMoviesEntity(it.data))

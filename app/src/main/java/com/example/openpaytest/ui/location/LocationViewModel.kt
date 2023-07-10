@@ -13,16 +13,15 @@ import javax.inject.Inject
 class LocationViewModel
 @Inject constructor(private val locationRepository: LocationRepository) : BaseViewModel() {
 
-    private val _saveLocationResult : MutableStateFlow<LocationItem?> = MutableStateFlow(null)
-    val saveLocationResult : StateFlow<LocationItem?> get() = _saveLocationResult
+    private val _saveLocationResult: MutableStateFlow<LocationItem?> = MutableStateFlow(null)
+    val saveLocationResult: StateFlow<LocationItem?> get() = _saveLocationResult
 
     suspend fun saveLocation(item: LocationItem) {
         locationRepository.saveLocation(item).collect {
             when (it) {
-                DataResult.Loading -> {}
-                is DataResult.Success ->{
-                    if (it.data)_saveLocationResult.value = item
-                }
+                is DataResult.Loading -> {}
+                is DataResult.Success -> if (it.data) _saveLocationResult.value = item
+                is DataResult.Error -> {}
             }
         }
     }

@@ -13,13 +13,14 @@ import javax.inject.Inject
 class MapViewModel
 @Inject constructor(private val locationRepository: LocationRepository) : BaseViewModel() {
 
-    private val _locations : MutableStateFlow<List<LocationItem>?> = MutableStateFlow(null)
-    val locations : StateFlow<List<LocationItem>?> get() = _locations
+    private val _locations: MutableStateFlow<List<LocationItem>?> = MutableStateFlow(null)
+    val locations: StateFlow<List<LocationItem>?> get() = _locations
     suspend fun getLocations() {
         locationRepository.getLocations().collect {
-            when(it){
-                DataResult.Loading -> {}
+            when (it) {
+                is DataResult.Loading -> {}
                 is DataResult.Success -> _locations.value = it.data
+                is DataResult.Error -> {}
             }
         }
     }

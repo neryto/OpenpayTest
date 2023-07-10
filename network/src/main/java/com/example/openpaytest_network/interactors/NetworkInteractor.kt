@@ -12,13 +12,15 @@ class NetworkInteractor {
     suspend fun <T : Any> handleApi(
         execute: suspend () -> Response<T>
     ): Flow<NetworkResult<T>>  = flow {
-        emit(NetworkResult.Loading)
+        emit(NetworkResult.Loading(true))
          try {
             val response = execute()
             val body = response.body()
             if (response.isSuccessful && body != null) {
-              emit(  NetworkResult.Success(body))
+                emit(NetworkResult.Loading(false))
+                emit(  NetworkResult.Success(body))
             } else {
+                emit(NetworkResult.Loading(false))
                 emit(NetworkResult.Error(
                     code = response.code(),
                     message = response.message()
@@ -26,9 +28,11 @@ class NetworkInteractor {
 
             }
         } catch (e: HttpException) {
-            emit(NetworkResult.Error(code = e.code(), message = e.message()))
+             emit(NetworkResult.Loading(false))
+             emit(NetworkResult.Error(code = e.code(), message = e.message()))
         } catch (e: Throwable) {
-            emit(NetworkResult.Exception(e))
+             emit(NetworkResult.Loading(false))
+             emit(NetworkResult.Exception(e))
         }
     }
 

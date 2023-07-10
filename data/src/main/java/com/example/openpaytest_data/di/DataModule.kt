@@ -3,7 +3,7 @@ package com.example.openpaytest_data.di
 import android.content.Context
 import androidx.room.Room
 import com.example.openpaytest_data.db.AppDatabase
-import com.example.openpaytest_data.firestore.FirestoreHandler
+import com.example.openpaytest_data.firebase.FirestoreHandler
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore

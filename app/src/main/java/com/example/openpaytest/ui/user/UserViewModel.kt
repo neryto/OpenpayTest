@@ -20,15 +20,16 @@ constructor(private val userRepository: UserRepository) : BaseViewModel() {
     private val _user: MutableStateFlow<User?> = MutableStateFlow(null)
     val user: StateFlow<User?> get() = _user
 
-    private val _ratedMovies : MutableStateFlow<List<Movie>> = MutableStateFlow(listOf())
-    val ratedMovies : StateFlow<List<Movie>> get() = _ratedMovies
+    private val _ratedMovies: MutableStateFlow<List<Movie>> = MutableStateFlow(listOf())
+    val ratedMovies: StateFlow<List<Movie>> get() = _ratedMovies
 
     fun getUser() {
         viewModelScope.launch {
             userRepository.getUser().collect {
                 when (it) {
-                    DataResult.Loading -> _loading.value = true
+                    is DataResult.Loading -> _loading.value = true
                     is DataResult.Success -> _user.value = it.data
+                    is DataResult.Error -> {_error.value=it.error}
                 }
             }
 
@@ -38,12 +39,11 @@ constructor(private val userRepository: UserRepository) : BaseViewModel() {
 
     fun getRatedMovies() {
         viewModelScope.launch {
-            userRepository.getRatedMovies().collect{
-                when(it){
-                    DataResult.Loading -> _loading.value = true
-                    is DataResult.Success -> {
-                        _ratedMovies.value = it.data
-                    }
+            userRepository.getRatedMovies().collect {
+                when (it) {
+                    is DataResult.Loading -> _loading.value = true
+                    is DataResult.Success -> _ratedMovies.value = it.data
+                    is DataResult.Error -> _error.value = it.error
                 }
             }
         }

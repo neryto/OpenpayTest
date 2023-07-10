@@ -15,6 +15,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.openpaytest.base.ErrorDialogFragment
+import com.example.openpaytest.base.ErrorDialogFragment.Companion.TAG
 import com.example.openpaytest.databinding.ActivityMainBinding
 import com.example.openpaytest.common.PermissionsHandlerViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,17 +34,10 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                // Permission is granted. Continue the action or workflow in your
-                // app.
                 viewModel.updatePermissionValue(true)
             } else {
-                // Explain to the user that the feature is unavailable because the
-                // feature requires a permission that the user has denied. At the
-                // same time, respect the user's decision. Don't link to system
-                // settings in an effort to convince the user to change their
-                // decision.
-                //TODO implement
-                Toast.makeText(this,R.string.required_permission,Toast.LENGTH_LONG).show()
+                showError(getString(R.string.required_permission))
+
             }
         }
 
@@ -63,7 +58,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profile,
                 R.id.navigation_movies,
                 R.id.navigation_map,
-                R.id.navigation_register_location
+                R.id.navigation_register_location,
+                R.id.navigation_gallery
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -88,23 +84,19 @@ class MainActivity : AppCompatActivity() {
                 viewModel.updatePermissionValue(true)
             }
             shouldShowRequestPermissionRationale(permission) -> {
-                //TODO implement
-                Toast.makeText(this,R.string.required_permission,Toast.LENGTH_LONG).show()
-
-                // In an educational UI, explain to the user why your app requires this
-            // permission for a specific feature to behave as expected, and what
-            // features are disabled if it's declined. In this UI, include a
-            // "cancel" or "no thanks" button that lets the user continue
-            // using your app without granting the permission.
+                showError(getString(R.string.required_permission))
 
         }
             else -> {
-                // You can directly ask for the permission.
-                // The registered ActivityResultCallback gets the result of this request.
                 requestPermissionLauncher.launch(
                     permission)
             }
         }
+    }
+
+    private fun showError(message : String){
+        val dialogFragment = ErrorDialogFragment.newInstance(message)
+        dialogFragment.show(supportFragmentManager, TAG)
     }
 
 

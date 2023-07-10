@@ -21,19 +21,23 @@ class MoviesRepository
         moviesRemoteDataSource.getMovies(type).collect {
             when (it) {
                 is NetworkResult.Error -> {
-                    moviesLocalDataSource.getMovies(type)?.let {movies->
+                    moviesLocalDataSource.getMovies(type)?.let { movies ->
                         emit(DataResult.Success(movieMapper.toMovie(movies)))
+                    } ?: kotlin.run {
+                        emit(DataResult.Error(it.message))
                     }
                 }
 
                 is NetworkResult.Exception -> {
-                    moviesLocalDataSource.getMovies(type)?.let {movies->
+                    moviesLocalDataSource.getMovies(type)?.let { movies ->
                         emit(DataResult.Success(movieMapper.toMovie(movies)))
+                    } ?: kotlin.run {
+                        emit(DataResult.Error(it.e.localizedMessage))
                     }
                 }
 
-                NetworkResult.Loading -> {
-                    emit(DataResult.Loading)
+                is NetworkResult.Loading -> {
+                    emit(DataResult.Loading(it.show))
                 }
 
                 is NetworkResult.Success -> {

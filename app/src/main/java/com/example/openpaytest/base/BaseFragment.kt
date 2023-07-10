@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.openpaytest.base.ErrorDialogFragment.Companion.TAG
 
 abstract class BaseFragment : Fragment() {
 
@@ -32,5 +33,9 @@ abstract class BaseFragment : Fragment() {
         initObservers()
     }
 
+   open fun showError(message : String){
+       val dialogFragment = ErrorDialogFragment.newInstance(message)
+       dialogFragment.show(childFragmentManager, TAG)
+   }
 
 }

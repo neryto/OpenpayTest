@@ -21,4 +21,10 @@
         android:icon="@drawable/ic_register_location"
         android:title="@string/title_register_location" />
 
+    <item
+        android:id="@+id/navigation_gallery"
+        android:icon="@drawable/ic_gallery"
+        android:title="@string/title_gallery"
+        />
+
 </menu>

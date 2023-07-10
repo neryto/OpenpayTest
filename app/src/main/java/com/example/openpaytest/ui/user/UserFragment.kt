@@ -54,6 +54,14 @@ class UserFragment : BaseFragment() {
             }
         }
 
+        lifecycleScope.launch {
+            viewModel.error.collect{
+                it?.let {notNullError->
+                    showError(notNullError)
+                }
+            }
+        }
+
     }
 
     override fun startFragmentActions() {

@@ -44,7 +44,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 viewModel.locations.collect {
                     it?.let {
                         val initialLatLong = LatLng(19.42847, -99.12766)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLatLong, 12f))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLatLong, 10f))
                         for (location in it) {
                             val latLng =
                                 LatLng(location.latitude.toDouble(), location.longitude.toDouble())

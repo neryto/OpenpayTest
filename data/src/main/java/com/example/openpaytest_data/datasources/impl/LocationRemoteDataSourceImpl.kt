@@ -2,7 +2,7 @@ package com.example.openpaytest_data.datasources.impl
 
 import com.example.openpaytest_data.DataResult
 import com.example.openpaytest_data.datasources.LocationRemoteDataSource
-import com.example.openpaytest_data.firestore.FirestoreHandler
+import com.example.openpaytest_data.firebase.FirestoreHandler
 import com.example.openpaytest_data.models.LocationItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,14 +1,11 @@
-package com.example.openpaytest_data.firestore
+package com.example.openpaytest_data.firebase
 
 import android.content.Context
 import com.example.openpaytest_data.DataResult
 import com.example.openpaytest_data.R
 import com.example.openpaytest_data.models.LocationItem
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
