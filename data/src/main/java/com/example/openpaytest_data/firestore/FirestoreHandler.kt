@@ -40,4 +40,23 @@ class FirestoreHandler @Inject constructor(
         }
 
     }
+
+    fun getLocations() : Flow<DataResult<List<LocationItem>>> = flow {
+      val result =   firebseFirestore
+            .collection(context.getString(R.string.collection_path_location_id))
+            .get()
+            .await()
+        emit(DataResult.Success(
+            result.map {document->
+                val data = document.data
+                LocationItem(
+                    latitude = data["latitude"] as String,
+                    longitude = data["longitude"] as String,
+                    date = data["date"] as String
+                )
+            }
+        ))
+
+
+    }
 }

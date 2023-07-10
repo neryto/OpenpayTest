@@ -9,9 +9,9 @@ import javax.inject.Inject
 
 class LocationRemoteDataSourceImpl
 @Inject constructor(private val firestoreHandler: FirestoreHandler) : LocationRemoteDataSource {
-    override suspend fun getLocations() {
+    override suspend fun getLocations(): Flow<DataResult<List<LocationItem>>> =
+        firestoreHandler.getLocations()
 
-    }
 
     override suspend fun saveLocation(locationItem: LocationItem): Flow<DataResult<Boolean>> =
         firestoreHandler.saveLocation(locationItem)

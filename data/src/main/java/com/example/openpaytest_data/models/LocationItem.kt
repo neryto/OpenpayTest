@@ -6,5 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class LocationItem(
     val latitude:String,
-    val longitude:String
+    val longitude:String,
+    val date : String? = null
 ):Parcelable

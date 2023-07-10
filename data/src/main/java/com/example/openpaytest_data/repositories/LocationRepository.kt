@@ -9,9 +9,9 @@ import javax.inject.Inject
 class LocationRepository @Inject constructor(
     private val locationRemoteDataSource: LocationRemoteDataSourceImpl
 ) {
-    suspend fun getLocations() {
+    suspend fun getLocations() : Flow<DataResult<List<LocationItem>>> =
         locationRemoteDataSource.getLocations()
-    }
+
 
     suspend fun saveLocation(locationItem:LocationItem) : Flow<DataResult<Boolean>> =
         locationRemoteDataSource.saveLocation(locationItem)
