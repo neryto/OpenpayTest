@@ -1,5 +1,6 @@
 package com.example.openpaytest.ui.movies
 
+import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -58,15 +59,22 @@ class MoviesFragment : BaseFragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun initCollectors() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
                     viewModel.movies.collect {
+                        val myAdapter =  MovieAdapter() { movie ->
+                            showDetail(movie)
+                        }
+                        myAdapter.submitList(it)
                         binding.recyclerView.apply {
-                            adapter = MovieAdapter(it) { movie ->
-                                showDetail(movie)
-                            }
+                            adapter = myAdapter
+
                             layoutManager = FlexboxLayoutManager(
                                 requireContext(),
                                 FlexDirection.COLUMN, WRAP

@@ -2,12 +2,13 @@ package com.example.openpaytest
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
+import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnPreDrawListener
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,8 +18,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.openpaytest.base.ErrorDialogFragment
 import com.example.openpaytest.base.ErrorDialogFragment.Companion.TAG
-import com.example.openpaytest.databinding.ActivityMainBinding
 import com.example.openpaytest.common.PermissionsHandlerViewModel
+import com.example.openpaytest.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -65,9 +67,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.launchPermissionsRequest.collect{
+                    viewModel.launchPermissionsRequest.collect {
                         if (it.second) requestPermission(it.first)
                     }
                 }
@@ -75,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestPermission(permission:String){
+    private fun requestPermission(permission: String) {
         when {
             ContextCompat.checkSelfPermission(
                 this,
@@ -83,18 +85,21 @@ class MainActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED -> {
                 viewModel.updatePermissionValue(true)
             }
+
             shouldShowRequestPermissionRationale(permission) -> {
                 showError(getString(R.string.required_permission))
 
-        }
+            }
+
             else -> {
                 requestPermissionLauncher.launch(
-                    permission)
+                    permission
+                )
             }
         }
     }
 
-    private fun showError(message : String){
+    private fun showError(message: String) {
         val dialogFragment = ErrorDialogFragment.newInstance(message)
         dialogFragment.show(supportFragmentManager, TAG)
     }

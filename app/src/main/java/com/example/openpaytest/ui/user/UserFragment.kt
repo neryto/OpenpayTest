@@ -51,8 +51,10 @@ class UserFragment : BaseFragment() {
 
                 launch {
                     viewModel.ratedMovies.collect{
+                        val myAdapter =  MovieAdapter()
+                        myAdapter.submitList(it)
                         binding.recyclerView.apply {
-                            adapter = MovieAdapter(it)
+                            adapter = myAdapter
                             layoutManager = FlexboxLayoutManager(
                                 requireContext(),
                                 FlexDirection.COLUMN
